@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/default}">
+
+<div layout:fragment="content">
+	<h3>Error Page</h3>
+	<p>Application has encountered an error. Please contact support on ...</p>
+	<h1 th:text="${errorCode}"></h1>
+	<p th:utext="${errorMessage}"></p>
+	<a href="/" th:href="@{/}">Back to Home Page</a>
+</div>
