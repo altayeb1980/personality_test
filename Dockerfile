@@ -12,10 +12,10 @@ RUN mkdir -p $SPRING_BOOT_DOCKER_APP_BINARIES
 
 WORKDIR $SPRING_BOOT_DOCKER_APP_HOME
 
-COPY target/*.jar $SPRING_BOOT_DOCKER_APP_HOME/hotel-deals.jar
+COPY target/*.jar $SPRING_BOOT_DOCKER_APP_HOME/personality-test.jar
 
 # Expose default servlet container port
 EXPOSE 9090
 
 # Main command
-ENTRYPOINT ["java", "-jar","/opt/boot-docker/hotel-deals.jar"]
+ENTRYPOINT ["java", "-jar","/opt/boot-docker/personality-test.jar"]
