@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sparknetworks.html.HtmlQuestionTypeAdapter;
 import com.sparknetworks.model.Question;
-import com.sparknetworks.model.QuestionView;
 
 
 @Controller

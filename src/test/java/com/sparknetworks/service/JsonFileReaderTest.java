@@ -16,8 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 
 import com.sparknetworks.AbstractApplicationTest;
-import com.sparknetworks.model.db.Question;
-import com.sparknetworks.model.db.QuestionType;
+import com.sparknetworks.model.Question;
+import com.sparknetworks.model.QuestionType;
 
 public class JsonFileReaderTest extends AbstractApplicationTest {
 	

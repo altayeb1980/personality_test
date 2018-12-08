@@ -18,10 +18,10 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparknetworks.exception.ResourceNotFoundException;
-import com.sparknetworks.model.db.Question;
-import com.sparknetworks.model.db.QuestionCategories;
-import com.sparknetworks.model.db.QuestionCondition;
-import com.sparknetworks.model.db.QuestionType;
+import com.sparknetworks.model.Question;
+import com.sparknetworks.model.QuestionCategories;
+import com.sparknetworks.model.QuestionCondition;
+import com.sparknetworks.model.QuestionType;
 
 @Service
 public class JsonFileReader {

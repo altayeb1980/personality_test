@@ -8,9 +8,9 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.sparknetworks.model.db.Question;
-import com.sparknetworks.model.db.QuestionCategories;
-import com.sparknetworks.model.db.QuestionType;
+import com.sparknetworks.model.Question;
+import com.sparknetworks.model.QuestionCategories;
+import com.sparknetworks.model.QuestionType;
 
 
 

@@ -1,4 +1,4 @@
-package com.sparknetworks.model.db;
+package com.sparknetworks.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;

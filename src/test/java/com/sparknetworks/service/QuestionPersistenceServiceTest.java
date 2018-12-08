@@ -9,8 +9,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sparknetworks.AbstractApplicationTest;
-import com.sparknetworks.model.db.Question;
-import com.sparknetworks.model.db.QuestionCategories;
+import com.sparknetworks.model.Question;
+import com.sparknetworks.model.QuestionCategories;
 
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
