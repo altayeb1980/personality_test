@@ -1,21 +1,23 @@
 package com.sparknetworks.html;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import org.springframework.stereotype.Service;
 
 import com.sparknetworks.model.HtmlInputTypes;
 import com.sparknetworks.model.Question;
 import com.sparknetworks.model.QuestionType;
 import com.sparknetworks.model.QuestionView;
 
+@Service
 public class HtmlQuestionTypeAdapter {
 
 
-	public Map<QuestionView, String> buildHtmlTag(final List<Question> questions) {
+	public Map<QuestionView, String> buildHtmlTag(final Question question) {
 		
 		Map<QuestionView, String> map = new HashMap<>();
-		for (Question question : questions) {
+		//for (Question question : questions) {
 			QuestionView questionView = new QuestionView(question.getQuestion(), question.getCategory());
 			
 			QuestionType questionType = question.getQuestionType();
@@ -28,24 +30,23 @@ public class HtmlQuestionTypeAdapter {
 				for(String option:questionType.getOptions()) {
 					builder.append("<div>");
 					builder.append("<input type="+htmlInputType.getHtmlInputType()+" id="+option+" name="+option+" value="+option+">");
-					builder.append("<label for="+option+">Huey</label>");
+					builder.append("<label for="+option+">"+option+"</label>");
 					builder.append("</div>");
 				}
+				
+				
+				if(questionType.getCondition() != null) {
+					
+				}
+				
 				map.put(questionView, builder.toString());
 				break;
-//			case number_range:
-//				builder.append("<div>");
-//				builder.append("<input type="+htmlInputType.getHtmlInputType()+" id="+option+" name="+option+" value="+option+" min="+questionType.get+">");
-//				builder.append("<label for="+option+">Huey</label>");
-//				builder.append("</div>");
-//				
-//				break;
 
 			default:
 
 			}
 
-		}
+		//}
 		return map;
 	}
 

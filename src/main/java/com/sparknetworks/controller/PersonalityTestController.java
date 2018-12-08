@@ -12,26 +12,56 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sparknetworks.html.HtmlQuestionTypeAdapter;
 import com.sparknetworks.model.Question;
 import com.sparknetworks.model.QuestionView;
-import com.sparknetworks.service.QuestionService;
+
 
 @Controller
 public class PersonalityTestController {
 
 	
-	@Autowired
-	private QuestionService questionService;
+//	@Autowired
+//	private QuestionService questionService;
+
+//	@Autowired
+//	private HtmlQuestionTypeAdapter htmlQuestionTypeAdapter;
 	
-	private HtmlQuestionTypeAdapter htmlQuestionTypeAdapter;
 	
-	
-	@GetMapping("/questions")
-	public @ResponseBody ModelAndView allQuestions() {
+	@GetMapping("/")
+	public @ResponseBody ModelAndView init() {
 		ModelAndView model = new ModelAndView("questions");
-		List<Question> listQuestions = questionService.listQuestions();
-		Map<QuestionView, String> questionViewMap = htmlQuestionTypeAdapter.buildHtmlTag(listQuestions);
-		model.addObject("questionViewMap",questionViewMap);
+//		List<Question> listQuestions = questionService.listQuestions();
+//		
+//		if(listQuestions.size() > 0) {
+//			Map<QuestionView, String> questionViewMap = htmlQuestionTypeAdapter.buildHtmlTag(listQuestions.get(0));
+//			model.addObject("questionViewMap",questionViewMap);
+//		}else {
+//			
+//		}
+		
+		
 		return model;
 	}
+	
+	
+//	@GetMapping("/questions")
+//	public @ResponseBody ModelAndView allQuestions() {
+//		ModelAndView model = new ModelAndView("questions");
+//		List<Question> listQuestions = questionService.listQuestions();
+//		Map<QuestionView, String> questionViewMap = htmlQuestionTypeAdapter.buildHtmlTag(listQuestions);
+//		model.addObject("questionViewMap",questionViewMap);
+//		return model;
+//	}
+	
+	
+	
+//	@GetMapping("/getNextQuestion")
+//	public @ResponseBody ModelAndView getNextQuestion() {
+//		ModelAndView model = new ModelAndView("questions");
+//		List<Question> listQuestions = questionService.listQuestions();
+//		Map<QuestionView, String> questionViewMap = htmlQuestionTypeAdapter.buildHtmlTag(listQuestions);
+//		model.addObject("questionViewMap",questionViewMap);
+//		return model;
+//	}
+	
 	
 	
 	

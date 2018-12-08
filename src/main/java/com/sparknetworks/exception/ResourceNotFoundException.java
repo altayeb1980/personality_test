@@ -1,8 +1,9 @@
 package com.sparknetworks.exception;
 
+import java.io.IOException;
 
 @SuppressWarnings("serial")
-public class ResourceNotFoundException extends RuntimeException{
+public class ResourceNotFoundException extends IOException{
 	
 	public ResourceNotFoundException(String message){
 		super(message);
