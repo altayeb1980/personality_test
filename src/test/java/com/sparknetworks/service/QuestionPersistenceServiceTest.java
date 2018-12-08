@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class QuestionPersistenceServiceTest extends AbstractApplicationTest {
 
 	@Autowired
-	private QuestionPersistenceService jsonPersistenceService;
+	private QuestionService jsonPersistenceService;
 	private List<Question> questions;
 
 	@Before

@@ -7,7 +7,7 @@ import com.sparknetworks.model.db.Question;
 import com.sparknetworks.repository.PersonalityTestRepository;
 
 @Service
-public class QuestionPersistenceServiceImpl implements QuestionPersistenceService {
+public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired
 	private PersonalityTestRepository personalityTestRepository;

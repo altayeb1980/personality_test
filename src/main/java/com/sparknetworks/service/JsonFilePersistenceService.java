@@ -15,7 +15,7 @@ public class JsonFilePersistenceService {
 	@Autowired
 	private JsonFileReader jsonFileReader;
 	@Autowired
-	private QuestionPersistenceService jsonPersistenceService;
+	private QuestionService jsonPersistenceService;
 
 	@PostConstruct
 	public void init() {
