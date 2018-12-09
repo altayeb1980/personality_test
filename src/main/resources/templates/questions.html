@@ -6,24 +6,26 @@
 <div layout:fragment="content">
 
 	<div class="my-3 p-3 bg-white rounded shadow-sm">
-		<h6 class="border-bottom border-gray pb-2 mb-0">Questions</h6>
+		<h6 class="border-bottom border-gray pb-2 mb-0">Category/&nbsp;Questions</h6>
 
-		<div class="media text-muted pt-3" th:if="${!questionViewMap.empty}"
-			th:each="questionViewMap : ${questionViewMap}">
+		<div class="media text-muted pt-3"
+			th:if="not ${questionsMap.isEmpty()}"
+			th:each="questionMap : ${questionsMap}">
 
 
 			<div
-				class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+				class="question">
 
 				<div class="d-flex justify-content-between align-items-top w-100">
-					<span class="d-block"> <label th:text="${questionViewMap.question}"></label>
-					</span>
+						<span class="d-block"> <label
+							th:text="${questionMap.key.questionCategories}"></label>/&nbsp;<label
+							th:text="${questionMap.key.question}"></label></span>
 				</div>
+				<div th:remove="tag" th:utext="${questionMap.value.tag}"></div>
 			</div>
 		</div>
 
-		<div class="media text-muted pt-3"
-			th:if="${questionViewMap.empty}">
+		<div class="media text-muted pt-3" th:if="${questionsMap.isEmpty()}">
 			<div
 				class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
 				align="center">
@@ -31,5 +33,96 @@
 						Questions Found</strong></span>
 			</div>
 		</div>
+
+		<div class="col-sm text-center">
+			<button id="btnNext" type="button" class="btn btn-primary">Next</button>
+
+		</div>
+
 	</div>
+
+
+	<div class="modal fade" id="questionAnswerModal" tabindex="-1"
+		role="dialog" aria-labelledby="questionAnswerModalLabel">
+
+		<div class="modal-dialog" role="document">
+
+			<div class="modal-content">
+
+				<div class="modal-header">
+
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+
+						<span aria-hidden="true">&times;</span>
+
+					</button>
+
+<!-- 					<h4 class="modal-title" id="questionAnswerModalLabel"
+						th:text="#{note.newNote}">New Note</h4>
+ -->
+				</div>
+
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="email" class="control-label" th:text="email">Email</label>
+							<input type="text" class="form-control" id="email" />
+						</div>
+					</form>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						th:text="close">Close</button>
+					<button id="btnSave" type="button" class="btn btn-primary"
+						th:text="save">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
 </div>
+
+<script layout:fragment="script">
+	$(document).ready(function() {
+		
+		var questionAnswerModal = $("#questionAnswerModal");
+		
+		function showQuestionAnswerModalModal(){
+			questionAnswerModal.modal('show');
+		}
+		
+		
+		function saveAnswers() {
+			//alert($('div.question:not(:has(:radio:checked))').length);
+			var email = $("#email");
+			var choices = {};
+			$('input[type="radio"]:checked').each(function() {
+				choices[$(this).attr('name')] = $(this).val();
+			  });
+			var user = {
+					'email':email.val(),	
+					'choices':choices
+				};
+			$.ajax({
+				type : "POST",
+				url : "/answers",
+				data : JSON.stringify(user),
+				contentType : "application/json",
+				success : function(user) {
+					questionAnswerModal.modal('hide');
+				},
+				error(error) {
+					alert(error);
+				}
+			});
+		}
+		$('#btnNext').on("click", showQuestionAnswerModalModal);
+		$('#btnSave').on("click", saveAnswers);
+	})
+</script>

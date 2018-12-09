@@ -3,6 +3,7 @@ package com.sparknetworks.html;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.stereotype.Service;
 
 import com.sparknetworks.model.HtmlInputTypes;
@@ -12,41 +13,27 @@ import com.sparknetworks.model.QuestionType;
 @Service
 public class HtmlQuestionTypeAdapter {
 
-
-	public Map<Question, String> buildHtmlTag(final Question question) {
-		
-		//Map<QuestionView, String> map = new HashMap<>();
-		//for (Question question : questions) {
-			//QuestionView questionView = new QuestionView(question.getQuestion(), question.getCategory());
-			
-			QuestionType questionType = question.getQuestionType();
-			StringBuilder builder = new StringBuilder();
-			HtmlInputTypes htmlInputType = HtmlInputTypes.valueOf(questionType.getType());
-			switch (htmlInputType) {
-			case single_choice:
-			case single_choice_conditional:
-				
-				//for(String option:questionType.getOptions()) {
-					//b/uilder.append("<div>");
-					//builder.append("<input type="+htmlInputType.getHtmlInputType()+" id="+option+" name="+option+" value="+option+">");
-					//builder.append("<label for="+option+">"+option+"</label>");
-				//	builder.append("</div>");
-				//}
-				
-				
-				//if(questionType.getCondition() != null) {
-					
-				//}
-				
-				//map.put(questionView, builder.toString());
-				break;
-
-			default:
-
+	public Map<Question, HtmlTag> buildHtmlTag(final Question question) {
+		Map<Question, HtmlTag> map = new HashMap<>();
+		QuestionType questionType = question.getQuestionType();
+		StringBuilder builder = new StringBuilder();
+		HtmlInputTypes htmlInputType = HtmlInputTypes.valueOf(questionType.getType());
+		switch (htmlInputType) {
+		case single_choice:
+		case single_choice_conditional:
+			for (String option : questionType.getOptions().split(",")) {
+				builder.append("<div>");
+				builder.append("&nbsp;<input type=" + htmlInputType.getHtmlInputType() + " id=" + question.getId() + " name=" + question.getId()
+						+ " value='" + option + "'>");
+				builder.append("&nbsp;<label for='" + option + "'>" + StringEscapeUtils.escapeHtml(option) + "</label>");
+				builder.append("</div>");
 			}
+			map.put(question, new HtmlTag(builder.toString()));
+			break;
+		default:
 
-		//}
-		return null;
+		}
+		return map;
 	}
 
 }

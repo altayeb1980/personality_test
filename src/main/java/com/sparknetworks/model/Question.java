@@ -48,6 +48,11 @@ public class Question {
 	public QuestionType getQuestionType() {
 		return questionType;
 	}
+	
+	
+	public String getCategory() {
+		return questionCategories.name();
+	}
 
 	@Override
 	public String toString() {
