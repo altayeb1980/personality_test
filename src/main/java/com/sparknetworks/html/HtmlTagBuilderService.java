@@ -60,7 +60,7 @@ public class HtmlTagBuilderService {
 				builder.append("<div>");
 				builder.append("&nbsp;<input type=" + htmlInputType.getHtmlInputType() + " name='" + question.getId()
 						+ "' value='" + StringEscapeUtils.escapeHtml(option) + "' > ");
-				builder.append("&nbsp;<label for='" + StringEscapeUtils.escapeHtml(option) + "'>"
+				builder.append("&nbsp;<label for='" + question.getId() + "'>"
 						+ StringEscapeUtils.escapeHtml(option) + "</label>");
 				builder.append("</div>");
 			}
@@ -73,8 +73,8 @@ public class HtmlTagBuilderService {
 			String maxRange = ranges[1];
 
 			builder.append("<div>");
-			builder.append("&nbsp;<input type=" + htmlInputType.getHtmlInputType() + " name=" + question.getId()
-					+ " min=" + minRange + " max=" + maxRange + ">");
+			builder.append("&nbsp;<input required type=" + htmlInputType.getHtmlInputType() + " name=" + question.getId()
+					+ " min=" + minRange + " max=" + maxRange + " value= "+minRange+">");
 			builder.append("</div>");
 			break;
 

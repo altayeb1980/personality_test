@@ -89,6 +89,17 @@
 		
 		
 
+		function allRangesAnswered(){
+			$('input[type="number"]').each(function() {
+				if($(this).val() == null || $(this).val() == 'undefined'){
+					return false;	
+				}
+			});
+			return true;
+		}
+		
+		
+		
 		function allQuestionAnswered(){
 			var names = {};
 			$('input:radio').each(function() { // find unique names
@@ -104,10 +115,10 @@
 		
 		
 		function showQuestionAnswerModalModal(){
-			if(allQuestionAnswered()){
+			if(allQuestionAnswered() && allRangesAnswered()){
 				questionAnswerModal.modal('show');	  
 			}else{
-				alert("Please answer all the questions!");
+				alert("Please answer all the questions with the ranges!");
 			}
 		}
 		
@@ -118,6 +129,14 @@
 			$('input[type="radio"]:checked').each(function() {
 				choices[$(this).attr('name')] = $(this).val();
 			  });
+			
+			
+			
+			$('input[type="number"]').each(function() {
+				choices[$(this).attr('name')] = $(this).val().toString();
+			  });
+			
+			
 			var user = {
 					'email':email.val(),	
 					'choices':choices
