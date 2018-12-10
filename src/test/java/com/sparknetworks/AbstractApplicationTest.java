@@ -28,7 +28,8 @@ public abstract class AbstractApplicationTest {
 	
 	
 	public Question createQuestion() {
-		return new Question("What is your gender?", QuestionCategories.hard_fact,new QuestionType("single_choice", String.join(",", Arrays.asList("male", "female", "other")), null, null));
+		
+		return new Question("What is your gender?", QuestionCategories.hard_fact,new QuestionType("single_choice", String.join(",", Arrays.asList("male", "female", "other")), null), null, null);
 	}
 
 }

@@ -14,13 +14,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparknetworks.exception.ResourceNotFoundException;
 import com.sparknetworks.model.Question;
 import com.sparknetworks.model.QuestionCategories;
-import com.sparknetworks.model.QuestionCondition;
 import com.sparknetworks.model.QuestionType;
 
 @Service
@@ -40,11 +37,25 @@ public class JsonFileReader {
 				Map<String, Object> questionTypeMap = (Map<String, Object>) questionMap.get("question_type");
 				List<String> options = (List<String>) questionTypeMap.get("options");
 				Map<String, Object> conditionMap = (Map<String, Object>) questionTypeMap.get("condition");
-				QuestionCondition questionCondition = null;
+				
+				QuestionType questionType = new QuestionType(String.valueOf(questionTypeMap.get("type")),
+						String.join(",", options),  null);
+				
+				Question question = new Question(new ArrayList<>());
+				question.setQuestionCategories(QuestionCategories.valueOf(questionMap.get("category") + ""));
+				question.setQuestionType(questionType);
+				question.setText(String.valueOf(questionMap.get("question")));
+				
+				
+				//String.valueOf(questionMap.get("question")), QuestionCategories.valueOf(questionMap.get("category") + ""), questionType, null, childrenQuestions
+				
+				
+				
 				if (conditionMap != null && !conditionMap.isEmpty()) {
 					Map<String, Object> predicateConditionMap = (Map<String, Object>) conditionMap.get("predicate");
 					List<String> exactEqualList = (List<String>) predicateConditionMap.get("exactEquals");
 					if (exactEqualList != null && !exactEqualList.isEmpty()) {
+						
 						String exactEquals = exactEqualList.get(1);
 						Map<String, Object> positiveConditionMap = (Map<String, Object>) conditionMap
 								.get("if_positive");
@@ -53,20 +64,27 @@ public class JsonFileReader {
 								.get("question_type");
 						Map<String, Object> questionTypeRangeConditionMap = (Map<String, Object>) questionTypeConditionMap
 								.get("range");
-						QuestionType questionType = new QuestionType(
-								String.valueOf(questionTypeConditionMap.get("type")), null, null,
+						QuestionType childQuestionType = new QuestionType(
+								String.valueOf(questionTypeConditionMap.get("type")), null,
 								questionTypeRangeConditionMap.get("from") + ","
 										+ questionTypeRangeConditionMap.get("to"));
-						questionCondition = new QuestionCondition(exactEquals,
-								new Question(String.valueOf(positiveConditionMap.get("question")),
-										QuestionCategories.valueOf(positiveConditionMap.get("category") + ""),
-										questionType));
+						
+						//childrenQuestions.add(new Question(String.valueOf(positiveConditionMap.get("question")),QuestionCategories.valueOf(positiveConditionMap.get("category") + ""), questionType, exactEquals,null));
+						//question.getChildren().add(e);
+						
+						question.setCondValue(exactEquals);
+						
+						Question childQuestion = new Question(question.getChildren());
+						childQuestion.setQuestionCategories(QuestionCategories.valueOf(positiveConditionMap.get("category") + ""));
+						childQuestion.setQuestionType(childQuestionType);
+						childQuestion.setText(String.valueOf(positiveConditionMap.get("question")));
+						childQuestion.setParent(question);
+						question.getChildren().add(childQuestion);
 					}
 				}
-				QuestionType questionType = new QuestionType(String.valueOf(questionTypeMap.get("type")),
-						String.join(",", options), questionCondition, null);
-				listOfQuestions.add(new Question(String.valueOf(questionMap.get("question")),
-						QuestionCategories.valueOf(questionMap.get("category") + ""), questionType));
+				
+				
+				listOfQuestions.add(question);
 			}
 		} catch (ResourceNotFoundException exp) {
 			throw new RuntimeException(exp);

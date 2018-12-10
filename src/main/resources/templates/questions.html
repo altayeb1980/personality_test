@@ -13,15 +13,8 @@
 			th:each="questionMap : ${questionsMap}">
 
 
-			<div
-				class="question">
-
-				<div class="d-flex justify-content-between align-items-top w-100">
-						<span class="d-block"> <label
-							th:text="${questionMap.key.questionCategories}"></label>/&nbsp;<label
-							th:text="${questionMap.key.question}"></label></span>
-				</div>
-				<div th:remove="tag" th:utext="${questionMap.value.tag}"></div>
+			<div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+				<div th:remove="tag" th:utext="${questionMap.value}"></div>
 			</div>
 		</div>
 
@@ -122,7 +115,30 @@
 				}
 			});
 		}
+
+		
+		$('input[type="radio"]').on('change', function(e) {
+		    questionId = e.currentTarget.name;
+		    parentConditionValueWithChildQuestionId = $('#parent-condition-'+questionId);
+		    console.log(parentConditionValueWithChildQuestionId);
+
+		    if(parentConditionValueWithChildQuestionId != null || parentConditionValueWithChildQuestionId!= 'undefined'){
+		    	parentConditionValueWithChildQuestionIdSplitter = parentConditionValueWithChildQuestionId.val().split(',');
+		    	parentConditionValue = parentConditionValueWithChildQuestionIdSplitter[0];
+		    	childQuestionId = parentConditionValueWithChildQuestionIdSplitter[1];
+		    	console.log(parentConditionValue)
+		    	console.log(childQuestionId)
+		    	
+		    	if(parentConditionValue == e.currentTarget.value){
+		    		$('#question-'+childQuestionId).show();
+		    	}else{
+		    		$('#question-'+childQuestionId).hide();
+		    	}	
+		    }
+		})
+		
 		$('#btnNext').on("click", showQuestionAnswerModalModal);
 		$('#btnSave').on("click", saveAnswers);
+		
 	})
 </script>
