@@ -13,7 +13,8 @@
 			th:each="questionMap : ${questionsMap}">
 
 
-			<div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+			<div
+				class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
 				<div th:remove="tag" th:utext="${questionMap.value}"></div>
 			</div>
 		</div>
@@ -51,7 +52,7 @@
 
 					</button>
 
-<!-- 					<h4 class="modal-title" id="questionAnswerModalLabel"
+					<!-- 					<h4 class="modal-title" id="questionAnswerModalLabel"
 						th:text="#{note.newNote}">New Note</h4>
  -->
 				</div>
@@ -86,13 +87,32 @@
 		
 		var questionAnswerModal = $("#questionAnswerModal");
 		
+		
+
+		function allQuestionAnswered(){
+			var names = {};
+			$('input:radio').each(function() { // find unique names
+			      names[$(this).attr('name')] = true;
+			});
+			var count = 0;
+			$.each(names, function() { // then count them
+			      count++;
+			});
+			
+			return ($('input:radio:checked').length == count);
+		}
+		
+		
 		function showQuestionAnswerModalModal(){
-			questionAnswerModal.modal('show');
+			if(allQuestionAnswered()){
+				questionAnswerModal.modal('show');	  
+			}else{
+				alert("Please answer all the questions!");
+			}
 		}
 		
 		
 		function saveAnswers() {
-			//alert($('div.question:not(:has(:radio:checked))').length);
 			var email = $("#email");
 			var choices = {};
 			$('input[type="radio"]:checked').each(function() {
@@ -120,20 +140,19 @@
 		$('input[type="radio"]').on('change', function(e) {
 		    questionId = e.currentTarget.name;
 		    parentConditionValueWithChildQuestionId = $('#parent-condition-'+questionId);
-		    console.log(parentConditionValueWithChildQuestionId);
 
-		    if(parentConditionValueWithChildQuestionId != null || parentConditionValueWithChildQuestionId!= 'undefined'){
-		    	parentConditionValueWithChildQuestionIdSplitter = parentConditionValueWithChildQuestionId.val().split(',');
-		    	parentConditionValue = parentConditionValueWithChildQuestionIdSplitter[0];
-		    	childQuestionId = parentConditionValueWithChildQuestionIdSplitter[1];
-		    	console.log(parentConditionValue)
-		    	console.log(childQuestionId)
+		    if(parentConditionValueWithChildQuestionId != null && parentConditionValueWithChildQuestionId!= 'undefined'){
+		    	if(parentConditionValueWithChildQuestionId.val() != null && parentConditionValueWithChildQuestionId.val() != 'undefined'){
+		    		parentConditionValueWithChildQuestionIdSplitter = parentConditionValueWithChildQuestionId.val().split(',');
+		    		parentConditionValue = parentConditionValueWithChildQuestionIdSplitter[0];
+		    		childQuestionId = parentConditionValueWithChildQuestionIdSplitter[1];
 		    	
-		    	if(parentConditionValue == e.currentTarget.value){
-		    		$('#question-'+childQuestionId).show();
-		    	}else{
-		    		$('#question-'+childQuestionId).hide();
-		    	}	
+		    		if(parentConditionValue == e.currentTarget.value){
+		    			$('#question-'+childQuestionId).show();
+		    		}else{
+		    			$('#question-'+childQuestionId).hide();
+		    		}
+		    	}
 		    }
 		})
 		

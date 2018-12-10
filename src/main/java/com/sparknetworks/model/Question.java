@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
@@ -36,6 +37,9 @@ public class Question {
 
 	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
 	private List<Question> children;
+	
+	@Transient
+	private Long parent_id;
 
 	// Makes Hibernate happy
 	private Question() {
@@ -101,4 +105,13 @@ public class Question {
 		this.children = children;
 	}
 
+	public Long getParent_id() {
+		return parent_id;
+	}
+
+	public void setParent_id(Long parent_id) {
+		this.parent_id = parent_id;
+	}
+
+	
 }

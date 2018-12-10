@@ -18,11 +18,9 @@ import com.sparknetworks.model.User;
 import com.sparknetworks.service.QuestionService;
 import com.sparknetworks.service.UserService;
 
-
 @Controller
 public class PersonalityTestController {
 
-	
 	@Autowired
 	private QuestionService questionService;
 	@Autowired
@@ -30,27 +28,26 @@ public class PersonalityTestController {
 
 	@Autowired
 	private HtmlTagBuilderService htmlQuestionTypeAdapter;
-	
-	
+
 	@GetMapping("/")
 	public @ResponseBody ModelAndView init() {
 		ModelAndView model = new ModelAndView("questions");
 		List<Question> questions = questionService.findAll();
 		Map<Question, String> map = new HashMap<>();
-		for(Question question:questions) {
-			if(question.getParent()!=null) {
+		for (Question question : questions) {
+			if (question.getParent() != null) {
 				continue;
 			}
 			map.put(question, htmlQuestionTypeAdapter.buildHtmlTag(question));
 		}
-		model.addObject("questionsMap",map);
+		model.addObject("questionsMap", map);
 		return model;
 	}
-	
+
 	@PostMapping("/answers")
 	@ResponseBody
 	public User answers(@RequestBody User user) {
 		return userService.persist(user);
 	}
-	
+
 }
