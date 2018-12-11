@@ -14,8 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sparknetworks.html.HtmlTagBuilderService;
 import com.sparknetworks.model.Question;
+import com.sparknetworks.model.QuestionCategory;
 import com.sparknetworks.model.User;
 import com.sparknetworks.repository.QuestionSpecification;
+import com.sparknetworks.service.CategoryService;
 import com.sparknetworks.service.QuestionService;
 import com.sparknetworks.service.UserService;
 
@@ -23,25 +25,38 @@ import com.sparknetworks.service.UserService;
 public class PersonalityTestController {
 
 	@Autowired
+	private CategoryService categoryService;
+	@Autowired
 	private QuestionService questionService;
 	@Autowired
 	private UserService userService;
 
 	@Autowired
-	private HtmlTagBuilderService htmlQuestionTypeAdapter;
+	private HtmlTagBuilderService htmlQuestionTypeService;
 
 	@GetMapping("/")
-	public @ResponseBody ModelAndView init() {
+	public @ResponseBody ModelAndView index() {
+		ModelAndView model = new ModelAndView("index");
+		List<QuestionCategory> categories= categoryService.findAll();
+		model.addObject("categories", categories);
+		return model;
+	}
+
+	
+	
+	@GetMapping("/questions")
+	public @ResponseBody ModelAndView questions() {
 		ModelAndView model = new ModelAndView("questions");
 		List<Question> questions = questionService.findAllWithParentIdNull(new QuestionSpecification());
 		Map<Question, String> map = new HashMap<>();
 		for (Question question : questions) {
-			map.put(question, htmlQuestionTypeAdapter.buildHtmlTag(question));
+			map.put(question, htmlQuestionTypeService.buildHtmlTag(question));
 		}
 		model.addObject("questionsMap", map);
 		return model;
 	}
-
+	
+	
 	@PostMapping("/answers")
 	@ResponseBody
 	public User answers(@RequestBody User user) {

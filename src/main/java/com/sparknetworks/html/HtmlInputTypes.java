@@ -1,4 +1,4 @@
-package com.sparknetworks.model;
+package com.sparknetworks.html;
 
 public enum HtmlInputTypes {
 

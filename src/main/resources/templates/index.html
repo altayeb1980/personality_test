@@ -5,13 +5,15 @@
 
 
 <div layout:fragment="content">
-	<div class="my-3 p-3 bg-white rounded shadow-sm" align="center">
-		<h6 class="border-bottom border-gray pb-2 mb-0">Welcome to our personality test</h6>
-
+	<div class="my-3 p-3 bg-white shadow-sm" align="center">
+		<h6 class="border-gray pb-2 mb-0">
+			We need your answer for some questions, the questions divided by the following categories:</h6>
+			 <ul class="list-inline" style="font-size:18px"><li class="list-inline-item" th:each="cat : ${categories}" th:text="${cat.category}"></li></ul>
+			<h6>
+			let's start with our questions 
+			<a href="/questions" aria-haspopup="true" aria-expanded="false">Personality Test Questions</a>
+			</h6>
 	</div>
-
-
 </div>
-
 </html>
 

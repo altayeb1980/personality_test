@@ -26,8 +26,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.sparknetworks.html.HtmlInputTypes;
 import com.sparknetworks.html.HtmlTagBuilderService;
-import com.sparknetworks.model.HtmlInputTypes;
 import com.sparknetworks.model.Question;
 import com.sparknetworks.model.QuestionType;
 
