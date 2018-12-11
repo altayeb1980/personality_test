@@ -1,5 +1,6 @@
 package com.sparknetworks.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -31,22 +32,18 @@ public class Question {
 	private QuestionType questionType;
 	private String condValue;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional=true)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "parent_id")
 	private Question parent;
 
-	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Question> children;
-	
+
 	@Transient
 	private Long parent_id;
 
 	// Makes Hibernate happy
 	private Question() {
-	}
-
-	public Question(List<Question> children) {
-		this.children = children;
 	}
 
 	public Long getId() {
@@ -113,5 +110,59 @@ public class Question {
 		this.parent_id = parent_id;
 	}
 
-	
+	public static class Builder {
+		private String text;
+		private QuestionCategories questionCategories;
+		private QuestionType questionType;
+		private String condValue;
+		private Question parent;
+		private List<Question> children;
+
+		public Builder withParent(Question parent) {
+			this.parent = parent;
+			return this;
+		}
+		
+		
+		public Builder withEmptyChildren() {
+			this.children = new ArrayList<>();
+			return this;
+		}
+		
+		public Builder withChildren(List<Question> children) {
+			this.children = children;
+			return this;
+		}
+
+		public Builder withText(String text) {
+			this.text = text;
+			return this;
+		}
+
+		public Builder withQuestionCategories(QuestionCategories questionCategories) {
+			this.questionCategories = questionCategories;
+			return this;
+		}
+
+		public Builder withQuestionType(QuestionType questionType) {
+			this.questionType = questionType;
+			return this;
+		}
+
+		public Builder withcondValue(String condValue) {
+			this.condValue = condValue;
+			return this;
+		}
+
+		public Question build() {
+			Question question = new Question();
+			question.parent = this.parent;
+			question.children = this.children;
+			question.text = this.text;
+			question.questionCategories = this.questionCategories;
+			question.questionType = this.questionType;
+			question.condValue = this.condValue;
+			return question;
+		}
+	}
 }

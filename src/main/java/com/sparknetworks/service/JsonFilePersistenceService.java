@@ -19,7 +19,7 @@ public class JsonFilePersistenceService {
 
 	@PostConstruct
 	public void init() {
-		List<Question> questions = jsonFileReader.readJsonData();
+		List<Question> questions = jsonFileReader.readJsonFile();
 		for (Question question : questions) {
 			jsonPersistenceService.persist(question);
 		}

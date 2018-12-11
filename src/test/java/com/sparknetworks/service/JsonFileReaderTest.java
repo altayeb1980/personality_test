@@ -26,7 +26,7 @@ public class JsonFileReaderTest extends AbstractApplicationTest {
 	
 	@Test
 	public void testReadJsonData() throws Exception {
-		List<Question> questions = jsonFileReader.readJsonData();
+		List<Question> questions = jsonFileReader.readJsonFile();
 		assertNotNull(questions);
 		
 		Question question = questions.get(0);
