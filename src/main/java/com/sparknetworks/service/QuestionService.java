@@ -2,6 +2,8 @@ package com.sparknetworks.service;
 
 import java.util.List;
 
+import org.springframework.data.jpa.domain.Specification;
+
 import com.sparknetworks.model.Question;
 
 public interface QuestionService {
@@ -10,7 +12,7 @@ public interface QuestionService {
 
 	void delete(Question question);
 
-	List<Question> findAll();
+	List<Question> findAllWithParentIdNull(Specification<Question> specification);
 	
 
 	

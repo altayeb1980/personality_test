@@ -3,6 +3,7 @@ package com.sparknetworks.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.sparknetworks.model.Question;
@@ -25,8 +26,8 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 	
 	@Override
-	public List<Question> findAll() {
-		return personalityTestRepository.findAll();
+	public List<Question> findAllWithParentIdNull(Specification<Question> specification) {
+		return personalityTestRepository.findAll(specification);
 	}
 
 }

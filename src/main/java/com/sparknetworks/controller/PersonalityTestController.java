@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sparknetworks.html.HtmlTagBuilderService;
 import com.sparknetworks.model.Question;
 import com.sparknetworks.model.User;
+import com.sparknetworks.repository.QuestionSpecification;
 import com.sparknetworks.service.QuestionService;
 import com.sparknetworks.service.UserService;
 
@@ -32,12 +33,9 @@ public class PersonalityTestController {
 	@GetMapping("/")
 	public @ResponseBody ModelAndView init() {
 		ModelAndView model = new ModelAndView("questions");
-		List<Question> questions = questionService.findAll();
+		List<Question> questions = questionService.findAllWithParentIdNull(new QuestionSpecification());
 		Map<Question, String> map = new HashMap<>();
 		for (Question question : questions) {
-			if (question.getParent() != null) {
-				continue;
-			}
 			map.put(question, htmlQuestionTypeAdapter.buildHtmlTag(question));
 		}
 		model.addObject("questionsMap", map);

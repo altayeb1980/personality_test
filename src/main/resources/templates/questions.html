@@ -118,11 +118,13 @@
 		
 		
 		function showQuestionAnswerModalModal(){
-			if(allQuestionsAnswered()){
-				questionAnswerModal.modal('show');	  
-			}else{
-				alert("Please answer all the questions with the ranges!");
-			}
+			questionAnswerModal.modal('show');
+			
+			//if(allQuestionsAnswered()){
+				//questionAnswerModal.modal('show');	  
+			//}else{
+				//alert("Please answer all the questions with the ranges!");
+			//}
 		}
 		
 		
@@ -150,10 +152,23 @@
 				data : JSON.stringify(user),
 				contentType : "application/json",
 				success : function(user) {
-					questionAnswerModal.modal('hide');
+					$("input:radio").prop("checked", false),
+					questionAnswerModal.modal('hide')
+					
+					noty({
+			            text: "Your answers was successfully saved!",
+			            layout: 'top',
+			            type: 'success',
+			            timeout: 5000
+			        });
 				},
 				error(error) {
-					alert(error);
+					noty({
+			            text: "Application has encountered an error. Please contact your support",
+			            layout: 'top',
+			            type: 'error',
+			            timeout: 5000
+			        });
 				}
 			});
 		}
