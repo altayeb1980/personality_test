@@ -42,9 +42,19 @@
 			// }
 		}
 		
+		function validateEmail(email) {
+			var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+			if(email == "" || email =="undefined") return false;
+			  return emailReg.test(email);
+			}
 		
 		function saveAnswers() {
-			var email = $("#email");
+			var email = $("#email").val();
+			if(!validateEmail(email)){
+				alert("Please enter valid email");
+				return;
+			}
+			
 			var choices = {};
 			$('input[type="radio"]:checked').each(function() {
 				choices[$(this).attr('name')] = $(this).val();
@@ -58,7 +68,7 @@
 			
 			
 			var user = {
-					'email':email.val(),	
+					'email':email,	
 					'choices':choices
 				};
 			$.ajax({
@@ -78,6 +88,8 @@
 			        });
 				},
 				error(error) {
+					questionAnswerModal.modal('hide')
+
 					noty({
 			            text: "Application has encountered an error. Please contact your support",
 			            layout: 'top',
