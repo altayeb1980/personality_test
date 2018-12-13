@@ -1,5 +1,7 @@
 package com.sparknetworks.model;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +14,7 @@ public class QuestionCategory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@NotEmpty
 	private String category;
 
@@ -31,4 +33,24 @@ public class QuestionCategory {
 		return category;
 	}
 
+	@Override
+	public String toString() {
+		return "QuestionCategory [id=" + id + ", category=" + category + "]";
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == this)
+			return true;
+		if (!(o instanceof QuestionCategory)) {
+			return false;
+		}
+		QuestionCategory cat = (QuestionCategory) o;
+		return id == cat.id && Objects.equals(category, cat.category);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id,category);
+	}
 }

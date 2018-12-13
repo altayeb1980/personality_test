@@ -74,8 +74,6 @@ public class JsonFileReader {
 				Map<String, Object> questionTypeMap = (Map<String, Object>) questionMap.get(QUESTION_TYPE_JSON_FIELD);
 				Map<String, Object> conditionMap = (Map<String, Object>) questionTypeMap.get(CONDITION_JSON_FIELD);
 
-				
-				
 				Question parentQuestion = new Question.Builder()
 						.withQuestionCategory(categories.get(questionMap.get(CATEGORY_JSON_FIELD) + ""))
 						.withQuestionType(new QuestionType(String.valueOf(questionTypeMap.get(TYPE_JSON_FIELD)),
