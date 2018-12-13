@@ -31,7 +31,8 @@ public class User {
 	private User() {
 	}
 
-	public User(final String email,final Map<Long, String> choices) {
+	public User(Long id,final String email,final Map<Long, String> choices) {
+		this.id = id;
 		this.email = email;
 		this.choices = choices;
 	}

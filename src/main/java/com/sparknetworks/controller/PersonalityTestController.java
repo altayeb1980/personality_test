@@ -60,7 +60,10 @@ public class PersonalityTestController {
 	@PostMapping("/answers")
 	@ResponseBody
 	public User answers(@RequestBody User user) {
+		User existing  = userService.findByEmail(user.getEmail());
+		if(existing != null) {
+			user = new User(existing.getId(), user.getEmail(), user.getChoices());
+		}
 		return userService.persist(user);
 	}
-
 }

@@ -4,5 +4,6 @@ import com.sparknetworks.model.User;
 
 public interface UserService {
 
+	User findByEmail(String email);
 	User persist(User user);
 }

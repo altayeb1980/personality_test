@@ -3,43 +3,50 @@
 		var questionAnswerModal = $("#questionAnswerModal");
 		
 		
-
-		function allChildQuestionsAnswered(){
-			allRangesAnswered = true;
-			$('input[type="number"]').each(function() {
-				if($(this).val().toString() == "" || $(this).val().toString() == 'undefined'){
-					allRangesAnswered = false;
-					return false;
-				}
-			 });
-			return allRangesAnswered;
-		}
 		
-		function allMainQuestionAnswered(){
-			var names = {};
-			$('input:radio').each(function() { // find unique names
-			      names[$(this).attr('name')] = true;
-			});
-			var count = 0;
-			$.each(names, function() { // then count them
-			      count++;
-			});
-			return ($('input:radio:checked').length == count);
-		}
 		
 		function allQuestionsAnswered(){
-			return allMainQuestionAnswered() && allChildQuestionsAnswered();
+			var allQuestionsAnswered = true;
+			var radioButtonNames = {};
+			$("div.parent-questions-div ").each(function (){
+				if($(this).attr("style") == 'display:show'){
+						
+					$(this).find('input:radio').each(function() { // find unique names
+						radioButtonNames[$(this).attr("name")] = true;
+					});
+					
+					$(this).find('div.child-questions-div').each(function (){
+						if($(this).attr("style") == 'display:show'){
+							var numberFieldRef = $(this).find('input[type="number"]');
+							if(numberFieldRef.val() == "" || numberFieldRef.val() == "undefined"){
+								allQuestionsAnswered = false;
+								return false;
+							}
+						}
+					});
+				}
+			});
+			
+			var count = 0;
+			$.each(radioButtonNames, function() { // then count them
+			      count++;
+			});
+			
+			if(count> 0){
+				return allQuestionsAnswered && ($('input:radio:checked').length == count);
+			}else{
+				return allQuestionsAnswered;
+			}
+		
 		}
 		
 		
 		function showQuestionAnswerModalModal(){
-			questionAnswerModal.modal('show');
-			
-			// if(allQuestionsAnswered()){
-				// questionAnswerModal.modal('show');
-			// }else{
-				// alert("Please answer all the questions with the ranges!");
-			// }
+			if(allQuestionsAnswered()){
+				questionAnswerModal.modal('show');
+			}else{
+				alert("Please answer all the questions with the ranges!");	
+			}
 		}
 		
 		function validateEmail(email) {
@@ -56,17 +63,23 @@
 			}
 			
 			var choices = {};
-			$('input[type="radio"]:checked').each(function() {
-				choices[$(this).attr('name')] = $(this).val();
-			  });
 			
-			
-			
-			$('input[type="number"]').each(function() {
-				choices[$(this).attr('name')] = $(this).val().toString();
-			  });
-			
-			
+			$("div.parent-questions-div ").each(function (){
+				if($(this).attr("style") == 'display:show'){
+					var radioRef = $(this).find('input:radio:checked');
+					radioRef.each(function() { // find unique names
+						choices[radioRef.attr("name")] = radioRef.val();
+					});
+					
+					$(this).find('div.child-questions-div').each(function (){
+						if($(this).attr("style") == 'display:show'){
+							var numberRef = $(this).find('input[type="number"]');
+							choices[numberRef.attr('name')] = numberRef.val().toString();
+						}
+					});
+				}
+			});
+
 			var user = {
 					'email':email,	
 					'choices':choices
@@ -103,22 +116,16 @@
 		
 		$('input[type="radio"]').on('change', function(e) {
 		    questionId = e.currentTarget.name;
-		    parentConditionValueWithChildQuestionId = $('#parent-condition-'+questionId);
+		    parentConditionQuestionValue = $('#parent-condition-'+questionId).val();
 
-		    if(parentConditionValueWithChildQuestionId != null && parentConditionValueWithChildQuestionId!= 'undefined'){
-		    	if(parentConditionValueWithChildQuestionId.val() != null && parentConditionValueWithChildQuestionId.val() != 'undefined'){
-		    		parentConditionValueWithChildQuestionIdSplitter = parentConditionValueWithChildQuestionId.val().split(',');
-		    		parentConditionValue = parentConditionValueWithChildQuestionIdSplitter[0];
-		    		childQuestionId = parentConditionValueWithChildQuestionIdSplitter[1];
-		    	
-		    		if(parentConditionValue == e.currentTarget.value){
-		    			$('#question-'+childQuestionId).show();
+		    if(parentConditionQuestionValue != null && parentConditionQuestionValue!= 'undefined'){
+		    		if(parentConditionQuestionValue == e.currentTarget.value){
+		    			$('div.child-questions-div').attr("style","display:show");
 		    		}else{
-		    			$('#question-'+childQuestionId).hide();
+		    			$('div.child-questions-div').attr("style","display:none");
 		    		}
-		    	}
 		    }
-		})
+		});
 		
 		$('#btnNext').on("click", showQuestionAnswerModalModal);
 		$('#btnSave').on("click", saveAnswers);
