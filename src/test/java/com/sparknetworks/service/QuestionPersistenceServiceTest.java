@@ -1,5 +1,9 @@
 package com.sparknetworks.service;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,10 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.sparknetworks.AbstractApplicationTest;
 import com.sparknetworks.model.Question;
 import com.sparknetworks.model.QuestionCategories;
-
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 
 public class QuestionPersistenceServiceTest extends AbstractApplicationTest {
 

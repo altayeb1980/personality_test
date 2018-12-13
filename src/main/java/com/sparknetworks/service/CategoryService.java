@@ -8,4 +8,5 @@ public interface CategoryService {
 
 	QuestionCategory persist(QuestionCategory category);
 	List<QuestionCategory> findAll();
+	void delete(QuestionCategory category);
 }

@@ -23,4 +23,10 @@ public class CategoryServiceImpl implements CategoryService{
 	public QuestionCategory persist(QuestionCategory category) {
 		return categoryRepository.save(category);
 	}
+
+	@Override
+	public void delete(QuestionCategory category) {
+		categoryRepository.delete(category);
+	}
+	
 }
