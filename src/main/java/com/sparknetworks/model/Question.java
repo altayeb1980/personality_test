@@ -2,6 +2,7 @@ package com.sparknetworks.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ public class Question {
 	private Long id;
 	@NotEmpty
 	private String text;
-	@ManyToOne(cascade = CascadeType.MERGE,optional = true)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},optional = true)
 	@JoinColumn(name = "category_id")
 	private QuestionCategory category;
 	@OneToOne(cascade = CascadeType.ALL)
@@ -123,4 +124,23 @@ public class Question {
 			return question;
 		}
 	}
+	
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == this)
+			return true;
+		if (!(o instanceof Question)) {
+			return false;
+		}
+		Question q = (Question) o;
+		return id == q.id && Objects.equals(text, q.text);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, category);
+	}
+	
+	
 }

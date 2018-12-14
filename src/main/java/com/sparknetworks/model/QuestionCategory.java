@@ -1,11 +1,15 @@
 package com.sparknetworks.model;
 
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
@@ -17,6 +21,9 @@ public class QuestionCategory {
 
 	@NotEmpty
 	private String category;
+
+	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Question> questions;
 
 	private QuestionCategory() {
 	}
@@ -31,6 +38,10 @@ public class QuestionCategory {
 
 	public String getCategory() {
 		return category;
+	}
+
+	public List<Question> getQuestions() {
+		return questions;
 	}
 
 	@Override
@@ -51,6 +62,6 @@ public class QuestionCategory {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id,category);
+		return Objects.hash(id, category);
 	}
 }

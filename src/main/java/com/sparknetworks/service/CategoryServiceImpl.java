@@ -1,6 +1,7 @@
 package com.sparknetworks.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +29,11 @@ public class CategoryServiceImpl implements CategoryService{
 	public void delete(QuestionCategory category) {
 		categoryRepository.delete(category);
 	}
+
+	@Override
+	public Optional<QuestionCategory> findById(Long id) {
+		return categoryRepository.findById(id);
+	}
+	
 	
 }
