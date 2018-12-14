@@ -6,4 +6,5 @@ public interface UserService {
 
 	User findByEmail(String email);
 	User persist(User user);
+	void delete(User user);
 }

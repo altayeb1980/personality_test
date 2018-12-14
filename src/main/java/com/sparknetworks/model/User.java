@@ -2,6 +2,7 @@ package com.sparknetworks.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -49,6 +50,21 @@ public class User {
 		return email;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o == this)
+			return true;
+		if (!(o instanceof User)) {
+			return false;
+		}
+		User user = (User) o;
+		return id == user.id && Objects.equals(email, user.email);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, email);
+	}
 
 
 	
