@@ -7,7 +7,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/personality_test
     username: root
-    password: root
+    password: ""
     testWhileIdle: true
     validationQuery: SELECT 1
   jpa:
