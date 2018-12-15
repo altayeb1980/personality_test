@@ -24,7 +24,6 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	@Transactional
 	public void delete(Question question) {
 		questionRepository.delete(question);
 	}
@@ -34,5 +33,12 @@ public class QuestionServiceImpl implements QuestionService {
 	public List<Question> findAllWithParentIdNull(Specification<Question> specification) {
 		return questionRepository.findAll(specification);
 	}
+
+	@Override
+	public Question findByText(String questionText) {
+		return questionRepository.findByText(questionText);
+	}
+	
+	
 
 }

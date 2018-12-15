@@ -62,7 +62,9 @@ public class PersonalityTestController {
 	public User answers(@RequestBody User user) {
 		User existing  = userService.findByEmail(user.getEmail());
 		if(existing != null) {
-			user = new User(existing.getId(), user.getEmail(), user.getChoices());
+			user = new User(user.getEmail());
+			user.setAnswers(existing.getAnswers());
+			user.setId(existing.getId());
 		}
 		return userService.persist(user);
 	}

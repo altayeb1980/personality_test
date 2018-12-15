@@ -1,7 +1,6 @@
 package com.sparknetworks.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +30,8 @@ public class CategoryServiceImpl implements CategoryService{
 	}
 
 	@Override
-	public Optional<QuestionCategory> findById(Long id) {
-		return categoryRepository.findById(id);
+	public QuestionCategory findByCategory(String category) {
+		return categoryRepository.findByCategory(category);
 	}
 	
 	

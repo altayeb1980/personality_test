@@ -2,6 +2,7 @@ package com.sparknetworks.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sparknetworks.model.User;
 import com.sparknetworks.repository.UserRepository;
@@ -13,6 +14,7 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 
 	@Override
+	@Transactional
 	public User persist(User user) {
 		return userRepository.save(user);
 	}
@@ -23,6 +25,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public void delete(User user) {
 		userRepository.delete(user);
 

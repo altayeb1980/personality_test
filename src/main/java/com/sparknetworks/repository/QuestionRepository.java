@@ -8,4 +8,5 @@ import com.sparknetworks.model.Question;
 
 @Repository
 public interface QuestionRepository extends JpaRepository<Question,Long>, JpaSpecificationExecutor<Question> {
+	Question findByText(String questionText);
 }

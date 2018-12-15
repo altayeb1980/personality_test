@@ -1,5 +1,6 @@
 package com.sparknetworks.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +24,7 @@ public class QuestionCategory {
 	private String category;
 
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Question> questions;
+	private List<Question> questions = new ArrayList<>();
 
 	private QuestionCategory() {
 	}

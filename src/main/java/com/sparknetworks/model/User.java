@@ -21,33 +21,42 @@ public class User {
 	private Long id;
 
 	@NotEmpty
-	private String email;	
-	
+	private String email;
 
 	@ElementCollection
-	@CollectionTable(name="question_answers")
-	@MapKeyColumn(name="question_id")
-	private Map<Long, String> choices = new HashMap<>();
+	@CollectionTable(name = "question_answers")
+	@MapKeyColumn(name = "question_id")
+	private Map<Long, String> answers = new HashMap<>();
 
 	private User() {
 	}
 
-	public User(Long id,final String email,final Map<Long, String> choices) {
-		this.id = id;
+	public User(final String email) {
 		this.email = email;
-		this.choices = choices;
 	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public Map<Long, String> getChoices() {
-		return choices;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getEmail() {
 		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Map<Long, String> getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(Map<Long, String> answers) {
+		this.answers = answers;
 	}
 
 	@Override
@@ -58,7 +67,7 @@ public class User {
 			return false;
 		}
 		User user = (User) o;
-		return id == user.id && Objects.equals(email, user.email);
+		return id == user.getId() && Objects.equals(email, user.email);
 	}
 
 	@Override
@@ -66,6 +75,4 @@ public class User {
 		return Objects.hash(id, email);
 	}
 
-
-	
 }

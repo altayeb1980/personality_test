@@ -7,4 +7,6 @@ import com.sparknetworks.model.QuestionCategory;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<QuestionCategory,Long>{
+	QuestionCategory findByCategory(String category);
 }
+

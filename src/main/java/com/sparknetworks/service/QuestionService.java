@@ -13,6 +13,7 @@ public interface QuestionService {
 	void delete(Question question);
 
 	List<Question> findAllWithParentIdNull(Specification<Question> specification);
+	Question findByText(String questionText);
 	
 
 	
