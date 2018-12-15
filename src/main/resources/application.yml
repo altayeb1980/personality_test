@@ -1,13 +1,12 @@
-spring.profiles.active: dev
+spring.profiles.active: production
 
 ---
-
 spring:
-  profiles: dev
+  profiles: production
   datasource:
-    url: jdbc:mysql://localhost:3306/personality_test
-    username: root
-    password: ""
+    url: jdbc:mysql://${production_datasource_url}:3306/personality_test
+    username: ${production_datasource_username}
+    password: ${production_datasource_password}
     testWhileIdle: true
     validationQuery: SELECT 1
   jpa:
