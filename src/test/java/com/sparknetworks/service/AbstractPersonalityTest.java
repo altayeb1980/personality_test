@@ -28,27 +28,25 @@ public abstract class AbstractPersonalityTest {
 	@Autowired
 	protected CategoryService categoryService;
 	@Autowired
-	protected QuestionService	questionService;
+	protected QuestionService questionService;
+
 
 	@Before
 	public void init() throws IOException {
 		categories = createCategories();
-		questions = createQuestions();
+		questions = getQuestions(false);
 	}
-	
+
 	@After
 	public void destroy() {
-		
-		for(QuestionCategory category: categories.values()) {
+		for (QuestionCategory category : categories.values()) {
 			categoryService.delete(category);
 		}
 
-		
 		for (Question q : questions) {
 			questionService.delete(q);
 		}
 	}
-	
 
 	private Map<String, QuestionCategory> createCategories() {
 		categories.put("hard_fact", new QuestionCategory("hard_fact"));
@@ -69,23 +67,23 @@ public abstract class AbstractPersonalityTest {
 				.withText(childTextQuestion).withParent(parentQuestion).withConditionExactValue("very important")
 				.build();
 	}
-	private List<Question> createQuestions() {
+
+	
+	protected List<Question> getQuestions(boolean withCondition) {
 		List<Question> questions = new ArrayList<>();
 		QuestionCategory category = categoryService.findByCategory("hard_fact");
-		QuestionType questionType = new QuestionType("single_choice_conditional",
+		QuestionType questionType = new QuestionType(withCondition?"single_choice_conditional":"single_choice",
 				String.join(",", Arrays.asList("not important", "important", "very important")), null);
 
 		Question question = createQuestion("How important is the age of your partner to you?", category, questionType);
-		Question childQuestion = createChildQuestion(question, category, new QuestionType("number_range", "", "18,44"),
-				"What age should your potential partner be?");
-		question.getChildren().add(childQuestion);
+
+		if (withCondition) {
+			Question childQuestion = createChildQuestion(question, category,
+					new QuestionType("number_range", "", "18,44"), "What age should your potential partner be?");
+			question.getChildren().add(childQuestion);
+		}
 		questions.add(question);
 
-		question = createQuestion("How often do you think about sex?", categoryService.findByCategory("passion"),
-				new QuestionType("single_choice", String.join(",", Arrays.asList("a few times a day", "daily",
-						"a few times a week", "a few times a month", "rarely")), ""));
-
-		questions.add(question);
 		return questions;
 	}
 

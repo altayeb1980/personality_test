@@ -3,15 +3,9 @@ package com.sparknetworks.controller;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +23,6 @@ import org.springframework.web.context.WebApplicationContext;
 import com.sparknetworks.html.HtmlInputTypes;
 import com.sparknetworks.html.HtmlTagBuilderService;
 import com.sparknetworks.model.Question;
-import com.sparknetworks.model.QuestionType;
 
 
 @RunWith(SpringRunner.class)
@@ -39,7 +32,8 @@ public class PersonalityTestControllerTest {
 
 	@Autowired
 	private WebApplicationContext wac;
-//	@MockBean
+
+	//	@MockBean
 //	private QuestionService questionServiceMock;
 	
 	@MockBean
