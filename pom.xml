@@ -117,8 +117,8 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
 	</dependencies>
+
 
 	<build>
 		<plugins>
@@ -128,5 +128,6 @@
 			</plugin>
 		</plugins>
 	</build>
-	<description>Personality Test Application based on Spring Boot, bootstrap 4,thymeleaf</description>
+	<description>Personality Test Application based on Spring Boot,
+			bootstrap 4,thymeleaf</description>
 </project>
