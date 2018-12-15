@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sparknetworks.html.HtmlTagBuilderService;
@@ -59,6 +61,7 @@ public class PersonalityTestController {
 	
 	@PostMapping("/answers")
 	@ResponseBody
+	@ResponseStatus(code = HttpStatus.CREATED)
 	public User answers(@RequestBody User user) {
 		User existing  = userService.findByEmail(user.getEmail());
 		if(existing != null) {

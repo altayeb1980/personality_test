@@ -32,7 +32,7 @@ public class UserServiceTest extends AbstractPersonalityTest{
 	public void shouldCreateUserWithAnswers() {
 		
 		for (Question q : questions) {
-			String userAnswer = getUserAnswer(q);
+			String userAnswer = getFirstOption(q);
 			Question savedQuestion = questionService.persist(q);
 			user.getAnswers().put(savedQuestion.getId(), userAnswer);
 			User savedUser = userService.persist(user);
@@ -44,13 +44,7 @@ public class UserServiceTest extends AbstractPersonalityTest{
 		
 	}
 
-	private String getUserAnswer(Question q) {
-		String userAnswer = "";
-		if(q.getQuestionType().getOptions() != null && q.getQuestionType().getOptions().split(",").length > 1) {
-			userAnswer = q.getQuestionType().getOptions().split(",")[1];
-		}
-		return userAnswer;
-	}
+	
 
 	private User createUser() {
 		return new User("xyz@gmail.com");

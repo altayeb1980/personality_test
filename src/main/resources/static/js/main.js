@@ -62,19 +62,19 @@
 				return;
 			}
 			
-			var choices = {};
+			var userAnswers = {};
 			
 			$("div.parent-questions-div ").each(function (){
 				if($(this).attr("style") == 'display:show'){
 					var radioRef = $(this).find('input:radio:checked');
 					radioRef.each(function() { // find unique names
-						choices[radioRef.attr("name")] = radioRef.val();
+						userAnswers[radioRef.attr("name")] = radioRef.val();
 					});
 					
 					$(this).find('div.child-questions-div').each(function (){
 						if($(this).attr("style") == 'display:show'){
 							var numberRef = $(this).find('input[type="number"]');
-							choices[numberRef.attr('name')] = numberRef.val().toString();
+							userAnswers[numberRef.attr('name')] = numberRef.val().toString();
 						}
 					});
 				}
@@ -82,7 +82,7 @@
 
 			var user = {
 					'email':email,	
-					'choices':choices
+					'answers':userAnswers
 				};
 			$.ajax({
 				type : "POST",

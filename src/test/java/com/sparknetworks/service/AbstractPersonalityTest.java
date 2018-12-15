@@ -88,5 +88,14 @@ public abstract class AbstractPersonalityTest {
 
 		return questions;
 	}
+	
+	
+	protected String getFirstOption(Question q) {
+		String userAnswer = "";
+		if(q.getQuestionType().getOptions() != null && q.getQuestionType().getOptions().split(",").length > 1) {
+			userAnswer = q.getQuestionType().getOptions().split(",")[1];
+		}
+		return userAnswer;
+	}
 
 }
