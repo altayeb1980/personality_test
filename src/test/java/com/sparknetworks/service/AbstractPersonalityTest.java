@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.sparknetworks.model.Question;
@@ -20,6 +21,7 @@ import com.sparknetworks.model.QuestionType;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+//@ActiveProfiles("test")
 public abstract class AbstractPersonalityTest {
 
 	protected Map<String, QuestionCategory> categories = new HashMap<>();

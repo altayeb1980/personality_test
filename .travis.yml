@@ -13,7 +13,7 @@ services:
   - mysql
 
 before_install:
-  - mysql -e 'CREATE DATABASE personality_test;'
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS personality_test;MYSQL_ROOT_PASSWORD=root'
 
   
 after_success:
