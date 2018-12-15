@@ -8,3 +8,4 @@ hs_err_pid*
 .idea/
 *.iml
 /target/
+!target/personality-test-1.0.0.jar
