@@ -38,7 +38,6 @@ public class HtmlTagBuilderService {
 		if (conditionValue != null) {
 			Question childQuestion = question.getChildren().get(0);
 			builder.append(buildQuestionTag(childQuestion, "class=child-questions-div","style=display:none"));
-			//builder.append("<input type='hidden' id='parent-condition-" + question.getId() + "'" + " value='" + conditionValue + "," + childQuestion.getId() + "'>");
 			builder.append("<input type='hidden' id='parent-condition-" + question.getId() + "'" + " value='" + conditionValue+"'>");
 		}
 		builder.append("</div>");

@@ -76,10 +76,12 @@ public abstract class AbstractPersonalityTest {
 				String.join(",", Arrays.asList("not important", "important", "very important")), null);
 
 		Question question = createQuestion("How important is the age of your partner to you?", category, questionType);
+		question.setId(100L);
 
 		if (withCondition) {
 			Question childQuestion = createChildQuestion(question, category,
 					new QuestionType("number_range", "", "18,44"), "What age should your potential partner be?");
+			childQuestion.setId(101L);
 			question.getChildren().add(childQuestion);
 		}
 		questions.add(question);

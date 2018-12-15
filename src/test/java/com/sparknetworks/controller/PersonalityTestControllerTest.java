@@ -1,44 +1,45 @@
 package com.sparknetworks.controller;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.util.List;
+
+import org.apache.commons.lang.StringEscapeUtils;
+import org.hamcrest.collection.IsMapContaining;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.sparknetworks.html.HtmlInputTypes;
 import com.sparknetworks.html.HtmlTagBuilderService;
 import com.sparknetworks.model.Question;
+import com.sparknetworks.service.AbstractPersonalityTest;
+import com.sparknetworks.service.QuestionService;
 
-
-@RunWith(SpringRunner.class)
-@SpringBootTest
 @WebAppConfiguration
-public class PersonalityTestControllerTest {
+public class PersonalityTestControllerTest extends AbstractPersonalityTest {
 
 	@Autowired
 	private WebApplicationContext wac;
 
-	//	@MockBean
-//	private QuestionService questionServiceMock;
-	
 	@MockBean
-	private HtmlTagBuilderService htmlQuestionTypeAdapterMock;
-	
+	private HtmlTagBuilderService htmlTagBuilderServiceMock;
+
+	@MockBean
+	private QuestionService questionServiceMock;
+
 	private MockMvc mockMvc;
 
 	@Before
@@ -47,55 +48,73 @@ public class PersonalityTestControllerTest {
 	}
 
 	@Test
-	public void findAllQuestions_ShouldAddQuestionsToModelAndRenderQuestionsListView() throws Exception {
-		Question question = null;//createQuestion();
-//		QuestionView questionView = new QuestionView(question.getQuestion(), question.getCategory());
-		
-//		Map<QuestionView, String> map = new HashMap<>();
-		StringBuilder builder = new StringBuilder();
-		builder.append("<div>");
-		builder.append("<input type="+HtmlInputTypes.single_choice.getHtmlInputType()+" id=male name=male value=male>");
-		builder.append("<label for=male>male</label>");
-		builder.append("</div>");
-		
-		
-		builder.append("<div>");
-		builder.append("<input type="+HtmlInputTypes.single_choice.getHtmlInputType()+" id=female name=female value=female>");
-		builder.append("<label for=female>female</label>");
-		builder.append("</div>");
-		
-		
-		builder.append("<div>");
-		builder.append("<input type="+HtmlInputTypes.single_choice.getHtmlInputType()+" id=other name=other value=other>");
-		builder.append("<label for=other>other</label>");
-		builder.append("</div>");
-		
-	//	map.put(questionView, builder.toString());
-		//when(questionServiceMock.listQuestions()).thenReturn(Arrays.asList(question));
-	//	when(htmlQuestionTypeAdapterMock.buildHtmlTag(Mockito.any())).thenReturn(map);
-		
+	public void renderIndexViewWithCategories() throws Exception {
+		mockMvc.perform(get("/")).andExpect(status().isOk()).
+		andExpect(view().name("questions")).
+		andExpect(model().attributeExists("questionsMap")).
+	    andExpect(model().attribute("questionsMap", IsMapContaining.hasValue(htmlTag)));
 
-		mockMvc.perform(get("/questions")).
-		andExpect(status().isOk()).
-		//andExpect(view().name("questions")).
-		andExpect(model().attribute("questionViewMap", hasSize(1)));
-		//andExpect(model().attribute("questionViewMap",hasItem(allOf(hasProperty("question", equalTo("What is your gender?")), hasProperty("category", equalTo("hard_fact")), hasProperty("questionType", hasProperty("type",equalTo("single_choice")))))));
+	verify(questionServiceMock, times(1)).findAllWithParentIdNull(Mockito.any());
+	verify(htmlTagBuilderServiceMock, times(1)).buildHtmlTag(Mockito.any());
+	verifyNoMoreInteractions(htmlTagBuilderServiceMock);
+	
+	}
+	
+	
+	@Test
+	public void findAllQuestionsAndRenderQuestionsToViewAsHtmlTags() throws Exception {
+		List<Question> questions = getQuestions(false);
+		String htmlTag = getHtmlTag(questions);
 
-		//verify(questionServiceMock, times(1)).listQuestions();
-		verify(htmlQuestionTypeAdapterMock, times(1)).buildHtmlTag(Mockito.any());
-		//verifyNoMoreInteractions(questionServiceMock, htmlQuestionTypeAdapterMock);
-		
+		when(questionServiceMock.findAllWithParentIdNull(Mockito.any())).thenReturn(questions);
+		when(htmlTagBuilderServiceMock.buildHtmlTag(Mockito.any())).thenReturn(htmlTag.toString());
+
+		mockMvc.perform(get("/questions")).andExpect(status().isOk()).
+			andExpect(view().name("questions")).
+			andExpect(model().attributeExists("questionsMap")).
+		    andExpect(model().attribute("questionsMap", IsMapContaining.hasValue(htmlTag)));
+
+		verify(questionServiceMock, times(1)).findAllWithParentIdNull(Mockito.any());
+		verify(htmlTagBuilderServiceMock, times(1)).buildHtmlTag(Mockito.any());
+		verifyNoMoreInteractions(htmlTagBuilderServiceMock);
 	}
 
-//	private Question createQuestion() {
-//		Question question = new Question();
-//		QuestionType questionType = new QuestionType();
-//		question.setQuestion("What is your gender?");
-//		question.setCategory("hard_fact");
-//		questionType.setType("single_choice");
-//		questionType.setOptions(Arrays.asList("male", "female", "other"));
-//		question.setQuestionType(questionType);
-//		return question;
-//	}
+	private String getHtmlTag(List<Question> questions) {
+		StringBuilder htmlTag = new StringBuilder();
+		for (Question question : questions) {
+			htmlTag.append("<div class='parent-questions-div' style='display:show'>");
+			htmlTag.append("<span class=\"d-block\">");
+			htmlTag.append("<label for=" + StringEscapeUtils.escapeHtml(question.getCategory().getCategory()) + ">"
+					+ StringEscapeUtils.escapeHtml(question.getCategory().getCategory()) + "</label>");
+			htmlTag.append("/");
+			htmlTag.append("&nbsp;");
+			htmlTag.append("<label for=" + StringEscapeUtils.escapeHtml(question.getText()) + ">"
+					+ StringEscapeUtils.escapeHtml(question.getText()) + "</label>");
+			htmlTag.append("</span>");
+
+			for (String option : question.getQuestionType().getOptions().split(",")) {
+				htmlTag.append("<div class='fields-div'>");
+				htmlTag.append("&nbsp;<input type=radio name='" + question.getId() + "' value='"
+						+ StringEscapeUtils.escapeHtml(option) + "' > ");
+				htmlTag.append("&nbsp;<label for='" + question.getId() + "'>" + StringEscapeUtils.escapeHtml(option)
+						+ "</label>");
+				htmlTag.append("</div>");
+			}
+
+			htmlTag.append("</div>");
+		}
+		return htmlTag.toString();
+	}
+
+	// private Question createQuestion() {
+	// Question question = new Question();
+	// QuestionType questionType = new QuestionType();
+	// question.setQuestion("What is your gender?");
+	// question.setCategory("hard_fact");
+	// questionType.setType("single_choice");
+	// questionType.setOptions(Arrays.asList("male", "female", "other"));
+	// question.setQuestionType(questionType);
+	// return question;
+	// }
 
 }
