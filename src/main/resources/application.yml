@@ -63,7 +63,7 @@ spring:
     testWhileIdle: true
     validationQuery: SELECT 1
   jpa:
-    database: MYSQ
+    database: MYSQL
     show-sql: false
     hibernate:
       ddl-auto: create
