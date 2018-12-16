@@ -4,7 +4,7 @@ spring.profiles.active: dev
 spring:
   profiles: dev
   datasource:
-    url: jdbc:mysql://localhost:3306/personality_test
+    url: jdbc:mysql://127.0.0.1:3306/personality_test_db
     username: root
     password: ""
     testWhileIdle: true
@@ -25,18 +25,19 @@ spring:
     
 endpoints.sensitive: false
 
-
 ---
 
 spring:
   profiles: test
   datasource:
-    url: jdbc:mysql://localhost:3306/personality_test
-    username: root
-    password: root
+    url: jdbc:mysql://127.0.0.1:2012/spring_app_db
+    username: app_user
+    password: test123
+    driver-class-name: com.mysql.jdbc.Driver
     testWhileIdle: true
     validationQuery: SELECT 1
   jpa:
+    database: MYSQL
     show-sql: true
     hibernate:
       ddl-auto: create
@@ -52,18 +53,18 @@ spring:
     
 endpoints.sensitive: false
 
-
 ---
-
 spring:
-  profiles: production
+  profiles: prod
   datasource:
-    url: jdbc:mysql://${production_url}:3306/personality_test
-    username: ${production_datasource_username}
-    password: ${production_datasource_password}
+    url: jdbc:mysql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_SCHEMA}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+    initialize: true
     testWhileIdle: true
     validationQuery: SELECT 1
   jpa:
+    database: MYSQ
     show-sql: false
     hibernate:
       ddl-auto: create
