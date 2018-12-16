@@ -75,7 +75,7 @@ Once the user enter to the home page, from the nav bar in the left corner of the
 
 The application list all the questions by category, so the user should answer all the questions, if one question did not answered validation will raise to let the user answers all the questions, if the question contains a condition and the exact equals answer meet the answer, the new child question will be open below the main question.
 
-Once the user answers all the questions and click next, dialog will open to let the user enter valid email, once the user enter his email notification should appear to notify the user his answers saved suucessfully.
+Once the user answers all the questions and click next button, dialog should be open to let the user enter valid email, once the user enter his email and click save, notification should appear to notify the user his answers saved successfully or error raise incase any error occure.
 
-The same user can answers the questions more than one time, the application override the prevoius qnswers for the same user.
+The same user can answers the questions more than one time, the application override the prevoius anwers for the same user.
 
