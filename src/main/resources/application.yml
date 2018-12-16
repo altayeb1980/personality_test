@@ -1,5 +1,3 @@
-spring.profiles.active: dev
-
 ---
 spring:
   profiles: dev
@@ -10,6 +8,7 @@ spring:
     testWhileIdle: true
     validationQuery: SELECT 1
   jpa:
+    database: MYSQL
     show-sql: true
     hibernate:
       ddl-auto: create

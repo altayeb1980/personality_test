@@ -1,1 +1,1 @@
-CREATE DATABASE personality_test;
+CREATE DATABASE personality_test_db;
