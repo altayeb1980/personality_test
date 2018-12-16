@@ -35,7 +35,7 @@ Wait for the unit and integration tests to run and the artifact to be generated.
 
 Now, start the application:
 
-$ java -jar $(ls target/*.jar)
+$java -jar "-Dspring.profiles.active=test"  $(ls target/*.jar)
 
 Check that the application is up and running hitting the actuator /health endpoint:
 $ curl http://localhost:9090/actuator/health or by browser just put the URL, you should receive message {"status":"UP"}, means the application is up.
