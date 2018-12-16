@@ -35,10 +35,10 @@ Wait for the unit and integration tests to run and the artifact to be generated.
 
 Now, start the application:
 
-$ java -jar $(ls target/*.jar)
+$java -jar "-Dspring.profiles.active=test"  $(ls target/*.jar)
 
 Check that the application is up and running hitting the actuator /health endpoint:
-$ curl http://localhost:9090/health
+$ curl http://localhost:9090/actuator/health or by browser just put the URL, you should receive message {"status":"UP"}, means the application is up.
 
 
 # Instructions for setting the site up by Docker
@@ -61,11 +61,12 @@ You should see personality-test in the list of images.
 
 now, let's run our docker container with profile prod.
 
-docker run -t --name personality_test_container --link mysql-docker-container:mysql -p 9090:9090 personality_test -e "SPRING_PROFILES_ACTIVE=prod" -e "DATABASE_HOST=mysql-docker-container" -e "DATABASE_PORT=3306" -e DATABASE_USER=app_user -e "DATABASE_PASSWORD=test123"
+docker run -t --name personality_test_container -e "SPRING_PROFILES_ACTIVE=prod" -e "DATABASE_HOST=mysql-docker-container" -e "DATABASE_PORT=3306" -e "DATABASE_USER=app_user" -e "DATABASE_PASSWORD=test123" -e "DATABASE_SCHEMA=personality_test_db"  --link mysql-docker-container:mysql -p 9090:9090 personality-test
+
 
 Check that the application is up and running hitting the actuator /health endpoint:
 
-$ curl http://localhost:9090/health
+$ curl http://localhost:9090/actuator/health or by browser just put the URL, you should receive message {"status":"UP"}, means the application is up.
 
 # How the application work
 To start working in the application type http://localhost:9090 in your browser.
