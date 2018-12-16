@@ -8,11 +8,11 @@ https://travis-ci.org/altayeb1980/personality_test/builds/468753273
 
 The application on startup parse the json file and save data according to each entity in the database.
 
-The tables represnted in this application are: Question, QuestionCategory, QuestionType, User.
+The tables represented in this application are: Question, QuestionCategory, QuestionType, User.
 
 No need to create schema or prepare database for this application Docker container take care for prepare MYSQL Database and create schema.
 
-The application docker or standalone link to the mysql container, and persist the data to the databse on the startup.
+The application can be run by docker or standalone and link to the mysql instance container, and persist the data to the databse on the startup.
 
 # Usage
 The Personality test applications stores the questions in a MySQL instance, so it expects the MySQL database to be up and running. The bellow command starts a MySQL container with a newly created database personality_test_db in it. It also sets up the mysql root password as root.
