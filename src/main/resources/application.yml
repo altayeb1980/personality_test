@@ -29,7 +29,7 @@ endpoints.sensitive: false
 spring:
   profiles: test
   datasource:
-    url: jdbc:mysql://127.0.0.1:2012/spring_app_db
+    url: jdbc:mysql://127.0.0.1:2012/personality_test_db
     username: app_user
     password: test123
     driver-class-name: com.mysql.jdbc.Driver
