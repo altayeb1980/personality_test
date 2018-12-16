@@ -19,13 +19,17 @@ Personality Test application can be run in two ways, local sandbox or docker con
 # Instructions for setting the site up in a local sandbox
 
 clone this repository and go into personality_test directory:
+
 $git https://github.com/altayeb1980/personality_test.git $cd personality_test
 
 Once you succesfully cloned the repository, start the application the jar artifact:
+
 $ mvn clean install -Ptest
 
 Wait for the unit and integration tests to run and the artifact to be generated. Eventually it will be stored in the target/ directory.
+
 Now, start the application:
+
 $ java -jar $(ls target/*.jar)
 
 Check that the application is up and running hitting the actuator /health endpoint:
@@ -33,7 +37,9 @@ $ curl http://localhost:9090/health
 
 
 # Instructions for setting the site up by Docker
+
 clone this repository and go into personality_test directory:
+
 $git https://github.com/altayeb1980/personality_test.git $cd personality_test
 
 Once you succesfully cloned the repository, start creating docker image:
@@ -41,16 +47,19 @@ Once you succesfully cloned the repository, start creating docker image:
 docker build -t personality-test .
 
 The image should be created, it will take a time during installation of the OpenJDK, at the end of creation for the image you should get this message "Successfully built" which indicate the image build successfully and ready to work on it.
+
 To list the images please type 
 
 docker images
 
 You should see personality-test in the list of images.
+
 now, let's run our docker container with profile prod.
 
 docker run -t --name personality_test_container --link mysql-docker-container:mysql -p 9090:9090 personality_test -e "SPRING_PROFILES_ACTIVE=prod" -e "DATABASE_HOST=mysql-docker-container" -e "DATABASE_PORT=3306" -e DATABASE_USER=app_user -e "DATABASE_PASSWORD=test123"
 
 Check that the application is up and running hitting the actuator /health endpoint:
+
 $ curl http://localhost:9090/health
 
 # How the application work
