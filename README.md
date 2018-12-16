@@ -3,7 +3,7 @@ This application is used for connecting to MySQL Database and presents a bunch o
 
 Latest Travis-CI build for this application can be found in :
 
-https://travis-ci.org/altayeb1980/personality_test/builds/468753273
+https://travis-ci.org/altayeb1980/personality_test/builds/468767056
 
 
 The application on startup parse the json file and save data according to each entity in the database.
