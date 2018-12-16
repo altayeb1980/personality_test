@@ -61,7 +61,8 @@ You should see personality-test in the list of images.
 
 now, let's run our docker container with profile prod.
 
-docker run -t --name personality_test_container --link mysql-docker-container:mysql -p 9090:9090 personality_test -e "SPRING_PROFILES_ACTIVE=prod" -e "DATABASE_HOST=mysql-docker-container" -e "DATABASE_PORT=3306" -e DATABASE_USER=app_user -e "DATABASE_PASSWORD=test123"
+docker run -t --name personality_test_container -e "SPRING_PROFILES_ACTIVE=prod" -e "DATABASE_HOST=mysql-docker-container" -e "DATABASE_PORT=3306" -e "DATABASE_USER=app_user" -e "DATABASE_PASSWORD=test123" -e "DATABASE_SCHEMA=personality_test_db"  --link mysql-docker-container:mysql -p 9090:9090 personality-test
+
 
 Check that the application is up and running hitting the actuator /health endpoint:
 
