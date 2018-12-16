@@ -1,6 +1,11 @@
 # Personality Test Spring Boot App
 This application is used for connecting to MySQL Database and presents a bunch of questions in the UI. It exposes the actuator endpoints as well as /questions endpoint, which list all the questions separated by category and create user answers when it get POST request.
 
+Latest Travis-CI build for this application can be found in :
+
+https://travis-ci.org/altayeb1980/personality_test/builds/468753273
+
+
 The application on startup parse the json file and save data according to each entity in the database.
 
 The tables represnted in this application are: Question, QuestionCategory, QuestionType, User.
