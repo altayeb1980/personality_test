@@ -38,7 +38,7 @@ Now, start the application:
 $ java -jar $(ls target/*.jar)
 
 Check that the application is up and running hitting the actuator /health endpoint:
-$ curl http://localhost:9090/health
+$ curl http://localhost:9090/actuator/health or by browser just put the URL, you should receive message {"status":"UP"}, means the application is up.
 
 
 # Instructions for setting the site up by Docker
@@ -65,7 +65,7 @@ docker run -t --name personality_test_container --link mysql-docker-container:my
 
 Check that the application is up and running hitting the actuator /health endpoint:
 
-$ curl http://localhost:9090/health
+$ curl http://localhost:9090/actuator/health or by browser just put the URL, you should receive message {"status":"UP"}, means the application is up.
 
 # How the application work
 To start working in the application type http://localhost:9090 in your browser.
