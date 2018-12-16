@@ -1,5 +1,11 @@
 # Personality Test Spring Boot App
-This application is used for connecting to JSON API and presents a bunch of questions in the UI. It exposes the actuator endpoints as well as the endpoint/questions, which list all the questions separated by category, the user will answer all the questions and click next to enter his email and save his answers.
+This application is used for connecting to MySQL Database and presents a bunch of questions in the UI. It exposes the actuator endpoints as well as the endpoint/questions, which list all the questions separated by category.
+
+# How the user will answers the questions
+Once the user enter to the site, from the nav bar in the left corner of the application, the user able to click over questions menu.
+Please note the application represents bunch of all questions as a bulk and the user should answrs all the questions together.
+Once the user answers all the questions and click next, dialog will open and the user should enter his email.
+
 
 The application jar build automatically by Travis CI, latest build# 31, please check this url for latest build information https://travis-ci.org/altayeb1980/personality_test/builds/468521568
 
